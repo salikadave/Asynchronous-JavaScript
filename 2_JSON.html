@@ -24,7 +24,7 @@
     function loadCustomer() {
       const xhr = new XMLHttpRequest();
 
-      xhr.open("GET", "customer.json", true);
+      xhr.open("GET", "data/customer.json", true);
 
       xhr.send();
 
@@ -56,7 +56,7 @@
         if (this.status === 200) {
           const customers = JSON.parse(this.responseText);
           // console.log(customers);
-          let output = '';
+          let output = "";
           customers.forEach(customer => {
             output += `
             <ul>
@@ -67,8 +67,6 @@
                     `;
             document.querySelector("#customers").innerHTML = output;
           });
-
-        
         }
       };
     }
