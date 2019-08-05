@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Arrow Functions</title>
+  </head>
+  <body>
+    <h1>Arrow Functions</h1>
+  </body>
+  <script>
+    // ES5 Function Declaration
+    // const sayHello = function() {
+    //   console.log("hello");
+    // };
+
+    // ES6 Arrow Functions
+    // const sayHello = () => console.log("hello");
+    const sayHello = () => 'Hello'
+    console.log(sayHello());
+
+    // Returning object literals
+    const info = () => ({msg: 'hello'});
+    console.log(info());
+
+    // Passing a single parameter
+    // const sayHelloUser = name => console.log(`Hello ${name}`);
+    // sayHelloUser('Salika');
+
+    // Passing multiple parameters
+    const sayHelloUser = (firstName, lastName) => console.log(`Hello ${firstName} ${lastName}`);
+    sayHelloUser('Salika', 'Dave')
+
+    // Passing callbacks
+    const users = ['Steve','Mike', 'Will', 'Dustin'];
+
+    // const nameLengths = users.map(function(user){
+    //     return user.length
+    // })
+
+    const nameLengths = users.map( user => user.length)
+    console.log(nameLengths);
+  </script>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>AJAX Sandbox</title>
+  </head>
+  <body>
+    <div class="container">
+      <button id="button1">Get Customer</button>
+      <button id="button2">Get Customers</button>
+      <h1>Customer</h1>
+      <div id="customer"></div>
+      <br /><br />
+      <h1>Customers</h1>
+      <div id="customers"></div>
+    </div>
+  </body>
+  <script>
+    // Event Listeners for the buttons
+    document.querySelector("#button1").addEventListener("click", loadCustomer);
+
+    function loadCustomer() {
+      const xhr = new XMLHttpRequest();
+
+      xhr.open("GET", "customer.json", true);
+
+      xhr.send();
+
+      xhr.onload = function() {
+        if (this.status === 200) {
+          console.log(this.responseText);
+          const customer = JSON.parse(this.responseText);
+          console.log(customer);
+          const output = `
+            <ul>
+                <li>ID : ${customer.id}</li>
+                <li>Name: ${customer.name}</li>
+                <li>Phone: ${customer.phone}</li>
+            </ul>
+            `;
+          document.querySelector("#customer").innerHTML = output;
+        }
+      };
+    }
+
+    document.querySelector("#button2").addEventListener("click", loadCustomers);
+
+    function loadCustomers() {
+      const xhr = new XMLHttpRequest();
+      xhr.open("GET", "customers.json", true);
+      xhr.send();
+
+      xhr.onload = function() {
+        if (this.status === 200) {
+          const customers = JSON.parse(this.responseText);
+          // console.log(customers);
+          let output = '';
+          customers.forEach(customer => {
+            output += `
+            <ul>
+                <li>ID : ${customer.id}</li>
+                <li>Name: ${customer.name}</li>
+                <li>Phone: ${customer.phone}</li>
+            </ul>
+                    `;
+            document.querySelector("#customers").innerHTML = output;
+          });
+
+        
+        }
+      };
+    }
+  </script>
+</html>

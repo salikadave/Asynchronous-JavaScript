@@ -1,0 +1,15 @@
+[
+    {
+        "title": "Post 1",
+        "body" : "These are custom posts."
+    },{
+        "title": "Post 2",
+        "body" : "These are custom posts."
+    },{
+        "title": "Post 3",
+        "body" : "These are custom posts."
+    },{
+        "title": "Post 4",
+        "body" : "These are custom posts."
+    }
+]

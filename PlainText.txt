@@ -1,0 +1,1 @@
+Hello, this has been obtained using XHR! This file is also being used as a sample for the fetch API example.

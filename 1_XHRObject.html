@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>XHR Object</title>
+    <style>
+      button {
+        padding: 20px;
+        background-color: white;
+        border: 1px solid black;
+      }
+      button:hover {
+        background-color: #ccc;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <button>Get Data</button>
+    <div class="output"></div>
+  </body>
+  <script>
+    document.querySelector("button").addEventListener("click", function() {
+      // Instantiate and XHR object
+
+      const xhr = new XMLHttpRequest();
+
+      xhr.open("GET", "PlainText.txt", true);
+      console.log(xhr)
+
+        xhr.onprogress = function() {
+          console.log("READY STATE", xhr.readyState);
+        };
+        
+
+        // Fired once the response is ready
+      xhr.onload = function() {
+        // check status
+        console.log(this)
+        if (xhr.status === 200) {
+          document.querySelector(".output").innerHTML = `<h1>${
+            this.responseText
+          }</h1>`;
+        } else {
+          xhr.onerror = function() {
+            console.log("Request error . . .");
+          };
+        }
+        
+
+        // readyState Values
+        //   0: request not initialized
+        //   1: server connection established
+        //   2: request recieved
+        //   3: processing request
+        //   4: request finished and response is ready
+      };
+      
+    xhr.send();
+    });
+  </script>
+</html>

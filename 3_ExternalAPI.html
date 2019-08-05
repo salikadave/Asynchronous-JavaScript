@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Darker+Grotesque:400,700,800|Montserrat:400,700&display=swap"
+      rel="stylesheet"
+    />
+    <title>External APIs</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        height: 100%;
+        font-family: "Montserrat", sans-serif;
+        background-image: url("background.jpg");
+        color: white;
+        letter-spacing: 1px;
+        overflow: hidden;
+      }
+
+      .container {
+        /* padding: 1rem; */
+        text-align: center;
+        max-width: 100%;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, 0.9)
+      }
+
+      .container h1{
+        margin-bottom: 1rem;
+        padding-top: 1rem;
+        font-family: "Darker Grotesque", sans-serif;
+      }
+
+      .container input {
+        margin: 1rem;
+        width: 3.5rem;
+        border: 1px solid black;
+        padding: 0.5rem;
+        font-size: 1rem;
+      }
+
+      .container button {
+        font-family: "Montserrat", sans-serif;
+        padding: 0.7rem;
+        margin: 0.9rem;
+        background-color: #333;
+        border:1px solid black;
+        color: white;
+        cursor: pointer;
+      }
+
+      .container button:hover {
+        background-color: white;
+        color: #333;
+      }
+      .jokes-content {
+        margin-bottom: 2rem;
+        height: 50%;
+        overflow: auto;
+      }
+
+      .jokes-content ul {
+        list-style-type: none;
+      }
+
+      .jokes-content ul li {
+        margin: 1rem;
+        line-height: 2rem;
+      }
+
+      .error-message {
+        color: red;
+        display: none;
+      }
+
+      footer {
+        background-color: #333;
+        width: 100%;
+        text-align: center;
+        position: fixed;
+        bottom: 0;
+        padding: 0.7rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Chuck Norris Joke Generator</h1>
+      <form>
+        <div>
+          <label for="number">Number of Jokes</label>
+          <br />
+          <input type="number" id="number" required />
+          <span class="error-message">Please enter a number.</span>
+        </div>
+        <div>
+          <button class="get-jokes">Get Jokes Now !</button>
+          <button class="clear-jokes">Clear Jokes</button>
+        </div>
+      </form>
+      <div class="jokes-content">
+        <ul class="jokes"></ul>
+      </div>
+
+      <footer>Made for fun 😂 by Salika Dave</footer>
+    </div>
+  </body>
+
+  <script>
+    let output = ``;
+    // Event Listener
+    document.querySelector(".get-jokes").addEventListener("click", getJokes);
+    document
+      .querySelector(".clear-jokes")
+      .addEventListener("click", clearJokes);
+
+    function getJokes(e) {
+      const number = document.querySelector("#number").value;
+      if (number === "") {
+        const errorMessage = document.querySelector('.error-message');
+        errorMessage.style.display = 'inline-block';
+        setTimeout(() => errorMessage.style.display = 'none', 3000);
+      }
+      // get api
+      const xhr = new XMLHttpRequest();
+      xhr.open("GET", `https://api.icndb.com/jokes/random/${number}`, true);
+      xhr.send();
+      xhr.onload = function() {
+        if (this.status === 200) {
+          const response = JSON.parse(xhr.responseText);
+          const jokesArray = response.value;
+
+          jokesArray.forEach(jokeObj => {
+            document.querySelector(".jokes").textContent = '';
+            output += `
+            <li>${jokeObj.joke}</li>
+            `;
+          });
+          document.querySelector(".jokes").innerHTML = output;
+        } else {
+          console.log("Request error . . .");
+        }
+      };
+
+      e.preventDefault();
+    }
+
+    function clearJokes(e) {
+      output = ``;
+      document.querySelector(".jokes").innerHTML = output;
+      e.preventDefault();
+    }
+  </script>
+</html>
